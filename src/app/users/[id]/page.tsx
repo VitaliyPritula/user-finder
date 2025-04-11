@@ -1,8 +1,4 @@
-
-"use client"; // Додано для клієнтського компонента
-
-import React, { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
+import React from "react";
 
 type User = {
   name: string;
@@ -13,34 +9,26 @@ type User = {
   website: string;
 };
 
-// Використовуємо 'PageProps' для отримання параметрів із контексту Next.js
-export default function UserDetail({ params }: { params: { id: string } }) {
-  const [user, setUser] = useState<User | null>(null); // Типізація User
-  const router = useRouter();
+async function fetchUser(id: string): Promise<User> {
+  const res = await fetch(`https://jsonplaceholder.typicode.com/users/${id}`);
+  if (!res.ok) {
+    throw new Error("Failed to fetch user data");
+  }
+  return res.json();
+}
 
-  // Завантаження даних користувача
-  useEffect(() => {
-    async function fetchUser() {
-      const res = await fetch(
-        `https://jsonplaceholder.typicode.com/users/${params.id}`
-      );
-      if (res.ok) {
-        const data: User = await res.json(); // Типізація відповіді
-        setUser(data);
-      } else {
-        console.error("Failed to fetch user data");
-      }
-    }
-    fetchUser();
-  }, [params.id]); // Модифікація залежності на params.id
+type Props = {
+  params: { id: string };
+};
 
-  if (!user) return <div>Loading...</div>;
+export default async function UserDetail({ params }: Props) {
+  const user = await fetchUser(params.id); // Асинхронно отримуємо дані
 
   return (
     <div className="w-[500px] mx-auto py-[40px]">
       <button
         className="flex items-center font-bold mb-5 text-2xl"
-        onClick={() => router.back()} // Використовуємо useRouter для кнопки назад
+        onClick={() => window.history.back()} // Кнопка назад
       >
         <span>Назад</span>
       </button>
