@@ -1,5 +1,8 @@
+// Якщо компонент використовує use client
+"use client"; // Додано для клієнтського компонента
+
 import React, { useState, useEffect } from "react";
-import { useRouter } from 'next/navigation';
+import { useRouter } from "next/navigation"; // Використовуємо useRouter з Next.js
 
 type User = {
   name: string;
@@ -11,7 +14,7 @@ type User = {
 };
 
 export default function UserDetail({ params }: { params: { id: string } }) {
-  const [user, setUser] = useState<User | null>(null); // Типізуємо як 'any' або конкретніше, якщо потрібно
+  const [user, setUser] = useState<User | null>(null); // Типізація 'User'
   const router = useRouter();
 
   useEffect(() => {
@@ -20,14 +23,14 @@ export default function UserDetail({ params }: { params: { id: string } }) {
         `https://jsonplaceholder.typicode.com/users/${params.id}`
       );
       if (res.ok) {
-        const data = await res.json();
+        const data: User = await res.json(); // Типізація відповіді
         setUser(data);
       } else {
         console.error("Failed to fetch user data");
       }
     }
     fetchUser();
-  }, [params.id]); // Модифікуємо залежність на params.id
+  }, [params.id]); // Модифікація залежності на params.id
 
   if (!user) return <div>Loading...</div>;
 
@@ -35,7 +38,7 @@ export default function UserDetail({ params }: { params: { id: string } }) {
     <div className="w-[500px] mx-auto py-[40px]">
       <button
         className="flex items-center font-bold mb-5 text-2xl"
-        onClick={() => router.back()}
+        onClick={() => router.back()} // Використовуємо useRouter для кнопки назад
       >
         <span>Назад</span>
       </button>
