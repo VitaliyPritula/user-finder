@@ -9,6 +9,13 @@ type User = {
   website: string;
 };
 
+// Оновлений тип Props для Next.js
+type Props = {
+  params: {
+    id: string;
+  };
+};
+
 async function fetchUser(id: string): Promise<User> {
   const res = await fetch(`https://jsonplaceholder.typicode.com/users/${id}`);
   if (!res.ok) {
@@ -16,10 +23,6 @@ async function fetchUser(id: string): Promise<User> {
   }
   return res.json();
 }
-
-type Props = {
-  params: { id: string };
-};
 
 export default async function UserDetail({ params }: Props) {
   const user = await fetchUser(params.id); // Асинхронно отримуємо дані
