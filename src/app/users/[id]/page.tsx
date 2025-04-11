@@ -2,7 +2,7 @@
 "use client"; // Додано для клієнтського компонента
 
 import React, { useState, useEffect } from "react";
-import { useRouter } from "next/navigation"; // Використовуємо useRouter з Next.js
+import { useRouter } from "next/navigation"; // Використовуємо useRouter для клієнтських компонентів
 
 type User = {
   name: string;
