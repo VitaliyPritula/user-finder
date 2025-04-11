@@ -4,8 +4,17 @@
 import React, { useState, useEffect } from "react";
 import { useRouter } from 'next/navigation';
 
+type User = {
+  name: string;
+  email: string;
+  company: { name: string };
+  address: { city: string };
+  phone: string;
+  website: string;
+};
+
 export default function UserDetail({ params }: { params: { id: string } }) {
-  const [user, setUser] = useState<any>(null); // Типізуємо як 'any' або конкретніше, якщо потрібно
+  const [user, setUser] = useState<User | null>(null); // Типізуємо як 'any' або конкретніше, якщо потрібно
   const router = useRouter();
 
   useEffect(() => {
