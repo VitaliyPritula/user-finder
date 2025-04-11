@@ -1,4 +1,4 @@
-// Якщо компонент використовує use client
+
 "use client"; // Додано для клієнтського компонента
 
 import React, { useState, useEffect } from "react";
@@ -13,10 +13,12 @@ type User = {
   website: string;
 };
 
+// Це компонент, який використовує асинхронні дані з API
 export default function UserDetail({ params }: { params: { id: string } }) {
   const [user, setUser] = useState<User | null>(null); // Типізація 'User'
   const router = useRouter();
 
+  // Завантаження даних користувача
   useEffect(() => {
     async function fetchUser() {
       const res = await fetch(
