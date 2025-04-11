@@ -32,7 +32,7 @@ export default function UserDetail({ params }: { params: { id: string } }) {
         <span>Назад</span>
       </button>
       <h1>Детальна інформація про користувача</h1>
-      <p>Ім'я: {user.name}</p>
+      <p>Ім&apos;я: {user.name}</p>
       <p>Email: {user.email}</p>
       <p>Компанія: {user.company.name}</p>
       <p>Місто: {user.address.city}</p>
