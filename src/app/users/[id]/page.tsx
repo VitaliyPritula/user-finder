@@ -1,6 +1,9 @@
-import React from "react";
+"use client"; 
+import React, { useState, useEffect } from "react";
+import { useRouter } from 'next/navigation';
+import { useParams } from 'next/navigation';
 
-// Тип користувача
+
 type User = {
   name: string;
   email: string;
@@ -10,28 +13,36 @@ type User = {
   website: string;
 };
 
-// Змінено тип параметрів для Next.js
-type Props = {
-  params: { id: string }; // Параметри маршруту
-};
+export default function UserDetail() {
+  const { id } = useParams();
+  const [user, setUser] = useState<User | null>(null); 
+  const router = useRouter();
 
-async function fetchUser(id: string): Promise<User> {
-  const res = await fetch(`https://jsonplaceholder.typicode.com/users/${id}`);
-  if (!res.ok) {
-    throw new Error("Failed to fetch user data");
-  }
-  return res.json();
-}
+  useEffect(() => {
+    async function fetchUser() {
+      if (id) {
+        const res = await fetch(
+          `https://jsonplaceholder.typicode.com/users/${id}`
+        );
+        if (res.ok) {
+          const data = await res.json();
+          setUser(data);
+        } else {
+          console.error("Failed to fetch user data");
+        }
+      }
+    }
 
-export default async function UserDetail({ params }: Props) {
-  // Асинхронне отримання користувача
-  const user = await fetchUser(params.id);
+    fetchUser();
+  }, [id]); // Слідкуйте за зміною id
+
+  if (!user) return <div>Loading...</div>;
 
   return (
     <div className="w-[500px] mx-auto py-[40px]">
       <button
         className="flex items-center font-bold mb-5 text-2xl"
-        onClick={() => window.history.back()} // Кнопка назад
+        onClick={() => router.back()}
       >
         <span>Назад</span>
       </button>
