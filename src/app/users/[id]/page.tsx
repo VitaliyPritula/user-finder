@@ -2,7 +2,7 @@
 "use client"; // Додано для клієнтського компонента
 
 import React, { useState, useEffect } from "react";
-import { useRouter } from "next/navigation"; // Використовуємо useRouter для клієнтських компонентів
+import { useRouter } from "next/navigation";
 
 type User = {
   name: string;
@@ -13,9 +13,9 @@ type User = {
   website: string;
 };
 
-// Це компонент, який використовує асинхронні дані з API
+// Використовуємо 'PageProps' для отримання параметрів із контексту Next.js
 export default function UserDetail({ params }: { params: { id: string } }) {
-  const [user, setUser] = useState<User | null>(null); // Типізація 'User'
+  const [user, setUser] = useState<User | null>(null); // Типізація User
   const router = useRouter();
 
   // Завантаження даних користувача
