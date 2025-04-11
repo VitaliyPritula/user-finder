@@ -1,10 +1,11 @@
-"use client"; // Використовується лише в Client Components
+// Якщо компонент використовує use client
+"use client"; 
 
 import React, { useState, useEffect } from "react";
 import { useRouter } from 'next/navigation';
 
 export default function UserDetail({ params }: { params: { id: string } }) {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState<any>(null); // Типізуємо як 'any' або конкретніше, якщо потрібно
   const router = useRouter();
 
   useEffect(() => {
@@ -20,7 +21,7 @@ export default function UserDetail({ params }: { params: { id: string } }) {
       }
     }
     fetchUser();
-  }, [params]);
+  }, [params.id]); // Модифікуємо залежність на params.id
 
   if (!user) return <div>Loading...</div>;
 
@@ -28,7 +29,8 @@ export default function UserDetail({ params }: { params: { id: string } }) {
     <div className="w-[500px] mx-auto py-[40px]">
       <button
         className="flex items-center font-bold mb-5 text-2xl"
-        onClick={() => router.back()}>
+        onClick={() => router.back()}
+      >
         <span>Назад</span>
       </button>
       <h1>Детальна інформація про користувача</h1>
