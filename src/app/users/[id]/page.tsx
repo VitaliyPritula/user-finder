@@ -1,5 +1,6 @@
 import React from "react";
 
+// Тип користувача
 type User = {
   name: string;
   email: string;
@@ -9,11 +10,9 @@ type User = {
   website: string;
 };
 
-// Оновлений тип Props для Next.js
+// Змінено тип параметрів для Next.js
 type Props = {
-  params: {
-    id: string;
-  };
+  params: { id: string }; // Параметри маршруту
 };
 
 async function fetchUser(id: string): Promise<User> {
@@ -25,7 +24,8 @@ async function fetchUser(id: string): Promise<User> {
 }
 
 export default async function UserDetail({ params }: Props) {
-  const user = await fetchUser(params.id); // Асинхронно отримуємо дані
+  // Асинхронне отримання користувача
+  const user = await fetchUser(params.id);
 
   return (
     <div className="w-[500px] mx-auto py-[40px]">
